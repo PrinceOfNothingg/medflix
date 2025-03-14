@@ -17,8 +17,11 @@ const { movie, showFullVideo } = storeToRefs(useMovie);
 </script>
 
 <template>
-  <div>
-    <h1>Netflix Clone</h1>
+  <div class="fixed w-full h-screen bg-blue-900">
+      <div v-if="!showFullVideo" id="SideNav" class="flex z-40 items-center w{120px} h-screen bg-black relative">
+        <h1 class="text-white text-2xl font-bold ml-4">Netflix</h1>
+      </div>
+
   </div>
 </template>
 
