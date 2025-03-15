@@ -8,6 +8,9 @@ export const useMovieStore = defineStore('movie', {
     popularMovies: [],
     topRatedMovies: [],
     upcomingMovies: [],
+    trendingMovies: [],
+    newReleases: [],
+    documentaries: [],
     videoUrl: null,
   }),
   actions: {
@@ -39,6 +42,34 @@ export const useMovieStore = defineStore('movie', {
           }
         })
         this.upcomingMovies = upcomingResponse.data.results
+
+        const trendingResponse = await axios.get('https://api.themoviedb.org/3/trending/movie/week', {
+          params: {
+            api_key: '3ce788b8d91731192cb0a610b7f2a89d',
+            language: 'en-US',
+            page: 1
+          }
+        })
+        this.trendingMovies = trendingResponse.data.results
+
+        const newReleasesResponse = await axios.get('https://api.themoviedb.org/3/movie/now_playing', {
+          params: {
+            api_key: '3ce788b8d91731192cb0a610b7f2a89d',
+            language: 'en-US',
+            page: 1
+          }
+        })
+        this.newReleases = newReleasesResponse.data.results
+
+        const documentariesResponse = await axios.get('https://api.themoviedb.org/3/discover/movie', {
+          params: {
+            api_key: '3ce788b8d91731192cb0a610b7f2a89d',
+            language: 'en-US',
+            page: 1,
+            with_genres: 99
+          }
+        })
+        this.documentaries = documentariesResponse.data.results
 
       } catch (error) {
         console.error('Error fetching movies:', error)
