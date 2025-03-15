@@ -29,7 +29,7 @@ const selectMovie = (movieId) => {
 <template>
   <div class="fixed w-full h-screen bg-black">
     <div v-if="!showFullVideo" id="SideNav" class="flex z-40 items-center w-[120px] h-screen bg-black relative">
-      <img class="absolute top-0 w-[35px] mt-10 ml-10" src="/images/netflix-logo.png" alt="">
+      <img class="absolute top-0 w-[90px] mt-6 ml-3" src="/images/netflix.png" alt="">
       <div>
         <div class="py-2 mx-10 my-6">
           <Magnify fillColor="#FFFFFF" :size="40" class="cursor-pointer"/>
