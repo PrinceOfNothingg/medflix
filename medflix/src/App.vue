@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import Magnify from 'vue-material-design-icons/Magnify.vue';
@@ -9,15 +10,20 @@ import MovieOutline from 'vue-material-design-icons/MovieOutline.vue';
 import Plus from 'vue-material-design-icons/Plus.vue';
 
 const router = useRouter()
+const showSidebar = ref(true)
 
 const openSearch = () => {
   router.push('/search')
+}
+
+const toggleSidebar = (visible) => {
+  showSidebar.value = visible
 }
 </script>
 
 <template>
   <div class="fixed w-full h-screen bg-black">
-    <div id="SideNav" class="flex z-40 items-center w-[120px] h-screen bg-black relative">
+    <div v-if="showSidebar" id="SideNav" class="flex z-40 items-center w-[120px] h-screen bg-black relative">
       <img class="absolute top-0 w-[90px] mt-6 ml-3" src="/images/netflix.png" alt="">
       <div>
         <div class="py-2 mx-10 my-6" @click="openSearch">
@@ -41,6 +47,6 @@ const openSearch = () => {
       </div>
     </div>
 
-    <router-view></router-view>
+    <router-view @toggleSidebar="toggleSidebar"></router-view>
   </div>
 </template>

@@ -1,10 +1,11 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useMovieStore } from '../stores/movie'
 import { storeToRefs } from 'pinia';
 
 import VideoCarousel from '@/components/VideoCarousel.vue';
 import MovieDetails from '@/components/MovieDetails.vue';
+import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue';
 
 const useMovie = useMovieStore()
 const { movie, showFullVideo, popularMovies, topRatedMovies, upcomingMovies, videoUrl, trendingMovies, newReleases, documentaries, animation, drama } = storeToRefs(useMovie)
@@ -16,6 +17,12 @@ onMounted(() => {
 const selectMovie = (movieId) => {
   useMovie.fetchMovieDetails(movieId)
 }
+
+const emit = defineEmits(['toggleSidebar'])
+
+watch(showFullVideo, (newVal) => {
+  emit('toggleSidebar', !newVal)
+})
 </script>
 
 <template>
@@ -50,7 +57,7 @@ const selectMovie = (movieId) => {
       <div class="absolute z-20 h-[70%] left-[120px] w-[100%] right-0 bottom-0 bg-gradient-to-t from-black via-black" />
     </div>
 
-    <div v-if="showFullVideo" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+    <div v-if="showFullVideo" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-100">
       <iframe 
         :src="videoUrl" 
         frameborder="0"
