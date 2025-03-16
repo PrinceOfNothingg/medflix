@@ -84,6 +84,7 @@ const selectMovie = (movieId, index) => {
   currentSlide.value = index
   currentSlideObject(movies.value[index], index)
   emit('selectMovie', movieId)
+  fullScreenVideo(index)
 }
 </script>
 

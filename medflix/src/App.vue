@@ -75,18 +75,22 @@ const selectMovie = (movieId) => {
         <VideoCarousel class="pb-5 pt-5" category="Now Trending" :movies="trendingMovies" @selectMovie="selectMovie" />
         <VideoCarousel class="pb-5 pt-5" category="New Releases" :movies="newReleases" @selectMovie="selectMovie" />
         <VideoCarousel class="pb-5 pt-5" category="Documentaries" :movies="documentaries" @selectMovie="selectMovie" />
-
       </div>
 
       <div class="absolute z-20 h-[70%] left-[120px] w-[100%] right-0 bottom-0 bg-gradient-to-t from-black via-black" />
     </div>
 
+    <div v-if="showFullVideo" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
       <iframe 
         :src="videoUrl" 
         frameborder="0"
         allow="autoplay; encrypted-media"
         allowfullscreen
-        class="absolute z-0 w-[100vw] h-full object-fit"
+        class="w-full h-full"
       ></iframe>
+      <div @click="showFullVideo = false" class="absolute top-4 left-4 p-2 bg-white bg-opacity-50 rounded-full cursor-pointer">
+        <ChevronLeft fillColor="#000000" :size="40"/>
+      </div>
     </div>
+  </div>
 </template>
