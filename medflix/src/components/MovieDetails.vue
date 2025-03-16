@@ -8,10 +8,30 @@
         <span class="pl-4">{{ genre.name }}</span>
       </div>
     </div>
-    <div class="text-2xl pt-6">{{ movie.overview }}</div>
+    <div class="text-2xl pt-6 movie-overview">{{ truncatedOverview }}</div>
   </div>
 </template>
 
 <script setup>
-defineProps({ movie: Object })
+import { computed } from 'vue';
+
+const props = defineProps({ movie: Object });
+
+const truncatedOverview = computed(() => {
+  const maxLength = 200; // Set the maximum length for the description
+  if (props.movie.overview.length > maxLength) {
+    return props.movie.overview.substring(0, maxLength) + '...';
+  }
+  return props.movie.overview;
+});
 </script>
+
+<style>
+.movie-overview {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
