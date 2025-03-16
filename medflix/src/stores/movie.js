@@ -11,6 +11,8 @@ export const useMovieStore = defineStore('movie', {
     trendingMovies: [],
     newReleases: [],
     documentaries: [],
+    animation: [],
+    drama: [],
     videoUrl: null,
   }),
   actions: {
@@ -70,6 +72,26 @@ export const useMovieStore = defineStore('movie', {
           }
         })
         this.documentaries = documentariesResponse.data.results
+
+        const animationResponse = await axios.get('https://api.themoviedb.org/3/discover/movie', {
+          params: {
+            api_key: '3ce788b8d91731192cb0a610b7f2a89d',
+            language: 'en-US',
+            page: 1,
+            with_genres: 16
+          }
+        })
+        this.animation = animationResponse.data.results
+
+        const dramaResponse = await axios.get('https://api.themoviedb.org/3/discover/movie', {
+          params: {
+            api_key: '3ce788b8d91731192cb0a610b7f2a89d',  
+            language: 'en-US',
+            page: 1,
+            with_genres: 18
+          }
+        })
+        this.drama = dramaResponse.data.results
 
       } catch (error) {
         console.error('Error fetching movies:', error)
