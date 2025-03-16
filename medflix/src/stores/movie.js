@@ -14,6 +14,7 @@ export const useMovieStore = defineStore('movie', {
     animation: [],
     drama: [],
     videoUrl: null,
+    searchResults: [],
   }),
   actions: {
     async fetchMovies() {
@@ -117,6 +118,20 @@ export const useMovieStore = defineStore('movie', {
         this.videoUrl = video ? `https://www.youtube.com/embed/${video.key}` : null
       } catch (error) {
         console.error('Error fetching movie details:', error)
+      }
+    },
+    async searchMovies(query) {
+      try {
+        const response = await axios.get('https://api.themoviedb.org/3/search/multi', {
+          params: {
+            api_key: '3ce788b8d91731192cb0a610b7f2a89d',
+            language: 'en-US',
+            query: query
+          }
+        })
+        this.searchResults = response.data.results
+      } catch (error) {
+        console.error('Error searching movies:', error)
       }
     }
   }
