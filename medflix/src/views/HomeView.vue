@@ -8,7 +8,7 @@ import MovieDetails from '@/components/MovieDetails.vue';
 import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue';
 
 const useMovie = useMovieStore()
-const { movie, showFullVideo, popularMovies, topRatedMovies, upcomingMovies, videoUrl, trendingMovies, newReleases, documentaries, animation, drama } = storeToRefs(useMovie)
+const { movie, showFullVideo, popularMovies, topRatedMovies, upcomingMovies, videoUrl, trendingMovies, newReleases, documentaries, animation, drama, horror } = storeToRefs(useMovie)
 
 onMounted(() => {
   useMovie.fetchMovies()
@@ -52,6 +52,7 @@ watch(showFullVideo, (newVal) => {
         <VideoCarousel class="pb-5 pt-5" category="Documentaries" :movies="documentaries" @selectMovie="selectMovie" />
         <VideoCarousel class="pb-5 pt-5" category="Animation" :movies="animation" @selectMovie="selectMovie" />
         <VideoCarousel class="pb-5 pt-5" category="Drama" :movies="drama" @selectMovie="selectMovie" />
+        <VideoCarousel class="pb-5 pt-5" category="Horror" :movies="horror" @selectMovie="selectMovie" />
       </div>
 
       <div class="absolute z-20 h-[70%] left-[120px] w-[100%] right-0 bottom-0 bg-gradient-to-t from-black via-black" />

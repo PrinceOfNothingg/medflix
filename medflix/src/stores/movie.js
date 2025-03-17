@@ -13,6 +13,7 @@ export const useMovieStore = defineStore('movie', {
     documentaries: [],
     animation: [],
     drama: [],
+    horror: [],
     videoUrl: null,
     searchResults: [],
   }),
@@ -93,6 +94,16 @@ export const useMovieStore = defineStore('movie', {
           }
         })
         this.drama = dramaResponse.data.results
+
+        const horrorResponse = await axios.get('https://api.themoviedb.org/3/discover/movie', {
+          params: {
+            api_key: '3ce788b8d91731192cb0a610b7f2a89d',
+            language: 'en-US',
+            page: 1,
+            with_genres: 27
+          }
+        })
+        this.horror = horrorResponse.data.results 
 
       } catch (error) {
         console.error('Error fetching movies:', error)
