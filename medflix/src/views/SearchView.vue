@@ -1,5 +1,7 @@
 <template>
   <div class="fixed inset-0 bg-black flex z-50">
+
+
     <div class="w-[20%] p-4">
       <button @click="closeSearch" class="text-white mb-4">Back to Browse</button>
       <div class="relative mb-4">
@@ -14,13 +16,19 @@
           <CloseIcon fillColor="#000000" :size="30"/>
         </div>
       </div>
+
+      <!-- SPACE AND BACKSPACE -->
+      <div class="grid grid-cols-2 gap-2 text-white mb-2">
+        <button v-for="key in otherKeys" :key="key.key" @click="handleOtherKey(key.key)" class="p-2 bg-gray-800 rounded">{{ key.icon }}</button>
+      </div>
+
       <div class="grid grid-cols-6 gap-2 text-white">
         <button v-for="key in keys" :key="key" @click="appendKey(key)" class="p-2 bg-gray-800 rounded">{{ key }}</button>
+
       </div>
       <div class="mt-4 text-white">
         <!-- GENRES FILTER -->
       </div>
-
     </div>
 
     <!-- MOVIES DISPLAYED -->
@@ -48,6 +56,10 @@ import { storeToRefs } from 'pinia'
 const query = ref('')
 const results = ref([])
 const keys = ref(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'])
+const otherKeys = ref([
+  { key: 'space', label: 'Space', icon: '␣' },
+  { key: 'backspace', label: 'Backspace', icon: '⌫' }
+])
 
 const router = useRouter()
 const useMovie = useMovieStore()
@@ -77,6 +89,21 @@ const searchMovies = async () => {
   }
 }
 watch(query, searchMovies)
+const handleOtherKey = (key) => {
+  if (key === 'space') {
+    handleSpace()
+  } else if (key === 'backspace') {
+    handleBackSpace()
+  }
+}
+
+const handleSpace = () => {
+  query.value += ' '
+}
+
+const handleBackSpace = () => {
+  query.value = query.value.slice(0, -1)
+}
 </script>
 
 <style>
