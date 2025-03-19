@@ -103,7 +103,7 @@ export const useMovieStore = defineStore('movie', {
             with_genres: 27
           }
         })
-        this.horror = horrorResponse.data.results 
+        this.horror = horrorResponse.data.results
 
       } catch (error) {
         console.error('Error fetching movies:', error)
@@ -131,6 +131,28 @@ export const useMovieStore = defineStore('movie', {
         console.error('Error fetching movie details:', error)
       }
     },
+    async fetchTvDetails(tvId) {
+      try {
+        const response = await axios.get(`https://api.themoviedb.org/3/tv/${tvId}`, {
+          params: {
+            api_key: '3ce788b8d91731192cb0a610b7f2a89d',
+            language: 'en-US'
+          }
+        })
+        this.movie = response.data
+
+        const videoResponse = await axios.get(`https://api.themoviedb.org/3/tv/${tvId}/videos`, {
+          params: {
+            api_key: '3ce788b8d91731192cb0a610b7f2a89d',
+            language: 'en-US'
+          }
+        })
+        const video = videoResponse.data.results.find(video => video.type === 'Trailer' && video.site === 'YouTube')
+        this.videoUrl = video ? `https://www.youtube.com/embed/${video.key}` : null
+      } catch (error) {
+        console.error('Error fetching TV details:', error)
+      }
+    },
     async searchMovies(query) {
       try {
         const response = await axios.get('https://api.themoviedb.org/3/search/multi', {
@@ -140,7 +162,8 @@ export const useMovieStore = defineStore('movie', {
             query: query
           }
         })
-        this.searchResults = response.data.results
+        // Include both movies and TV series in the search results
+        this.searchResults = response.data.results.filter(result => result.media_type === 'movie' || result.media_type === 'tv')
       } catch (error) {
         console.error('Error searching movies:', error)
       }
